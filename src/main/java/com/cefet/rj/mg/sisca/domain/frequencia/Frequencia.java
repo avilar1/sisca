@@ -1,6 +1,7 @@
 package com.cefet.rj.mg.sisca.domain.frequencia;
 
 import com.cefet.rj.mg.sisca.domain.aluno.Aluno;
+import com.cefet.rj.mg.sisca.domain.alunoTurma.AlunoTurma;
 import com.cefet.rj.mg.sisca.domain.turma.Turma;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -23,12 +24,8 @@ public class Frequencia {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "aluno_id")
-    private Aluno aluno;
-
-    @ManyToOne
-    @JoinColumn(name = "turma_id")
-    private Turma turma;
+    @JoinColumn(name = "aluno_turma_id")
+    private AlunoTurma alunoTurma;
 
     private LocalDate data;
 

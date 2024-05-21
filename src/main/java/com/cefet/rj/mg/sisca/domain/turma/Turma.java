@@ -43,4 +43,12 @@ public class Turma {
             inverseJoinColumns = @JoinColumn(name = "aluno_id")
     )
     private List<Aluno> alunosNotas;
+
+    @ManyToMany
+    @JoinTable(
+            name = "situacao",
+            joinColumns = @JoinColumn(name = "turma_id"),
+            inverseJoinColumns = @JoinColumn(name = "aluno_id")
+    )
+    private List<Aluno> alunosSituacao;
 }
