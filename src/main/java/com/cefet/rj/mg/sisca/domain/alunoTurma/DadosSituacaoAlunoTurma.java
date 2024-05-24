@@ -8,7 +8,7 @@ public record DadosSituacaoAlunoTurma(
         String nomeTurma,
         String situacao
 ) {
-    public DadosSituacaoAlunoTurma(AlunoTurma alunoTurma) {
-        this(alunoTurma.getAluno().getUsuario().getNome(), alunoTurma.getTurma().getNome(), alunoTurma.getSituacao());
-    }
+//    public DadosSituacaoAlunoTurma(AlunoTurma alunoTurma) {
+//        this(alunoTurma.getAluno().getUsuario().getNome(), alunoTurma.getTurma().getNome(), alunoTurma.getSituacao());
+//    }
 }

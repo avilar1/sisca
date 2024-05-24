@@ -8,19 +8,11 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Table(name = "PROFESSOR")
 @Entity(name = "Professor")
+@PrimaryKeyJoinColumn(name = "id_funcionario")
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor
-@EqualsAndHashCode(of = "id")
-public class Professor {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+@EqualsAndHashCode(callSuper = true)
+public class Professor extends Funcionario{
 
-
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "funcionario_id")
-    private Funcionario funcionario;
 }

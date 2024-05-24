@@ -1,6 +1,8 @@
-package com.cefet.rj.mg.sisca.domain.aluno;
+package com.cefet.rj.mg.sisca.service;
 
-import com.cefet.rj.mg.sisca.domain.nota.Nota;
+import com.cefet.rj.mg.sisca.domain.aluno.Aluno;
+import com.cefet.rj.mg.sisca.domain.aluno.AlunoRepository;
+import com.cefet.rj.mg.sisca.domain.aluno.DadosListagemAluno;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +15,7 @@ public class AlunoService {
     private AlunoRepository alunoRepository;
 
     public List<DadosListagemAluno> listarTodos() {
-        return alunoRepository.findAllByAtivoTrue().stream()
+        return alunoRepository.findAll().stream()
                 .map(DadosListagemAluno::new)
                 .collect(Collectors.toList());
     }

@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface AlunoTurmaRepository extends JpaRepository<AlunoTurma, Long> {
-    List<AlunoTurma> findByAlunoIdAndTurmaId(Long alunoId, Long turmaId);
+
 }

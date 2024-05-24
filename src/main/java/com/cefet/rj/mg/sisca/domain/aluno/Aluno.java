@@ -17,30 +17,36 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(of = "id")
+@EqualsAndHashCode(of = "id_aluno")
 public class Aluno {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long id_aluno;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "usuario_id")
+    @JoinColumn(name = "id_usuario")
     private Usuario usuario;
 
+    @Column(name = "matricula_aluno", nullable = false, unique = true)
     private int matricula_aluno;
 
+    @Column(name = "status", nullable = false)
     private int status;
 
+    @Column(name = "ano_matricula", length = 6)
     private String ano_matricula;
 
+    @Column(name = "valor_mensalidade", precision = 10, scale = 2)
     private BigDecimal valor_mensalidade;
 
-    @OneToMany(mappedBy = "aluno")
-    private List<AlunoTurma> alunoTurmas;
+//    @OneToMany(mappedBy = "aluno")
+//    private List<AlunoTurma> alunoTurmas;
 
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "aluno_curso",
-            joinColumns = @JoinColumn(name = "aluno_id"),
-            inverseJoinColumns = @JoinColumn(name = "curso_id"))
+    @JoinTable(
+            name = "ALUNO_CURSO",
+            joinColumns = @JoinColumn(name = "matricula_aluno", referencedColumnName = "matricula_aluno"),
+            inverseJoinColumns = @JoinColumn(name = "id_curso")
+    )
     private List<Curso> cursos;
 }

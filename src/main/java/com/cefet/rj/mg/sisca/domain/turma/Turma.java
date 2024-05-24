@@ -1,6 +1,10 @@
 package com.cefet.rj.mg.sisca.domain.turma;
 
+import com.cefet.rj.mg.sisca.domain.TurmaAlunoFrequencia.TurmaAlunoFrequencia;
+import com.cefet.rj.mg.sisca.domain.TurmaAlunoNota.TurmaAlunoNota;
 import com.cefet.rj.mg.sisca.domain.aluno.Aluno;
+import com.cefet.rj.mg.sisca.domain.alunoTurma.AlunoTurma;
+import com.cefet.rj.mg.sisca.domain.funcionario.Funcionario;
 import com.cefet.rj.mg.sisca.domain.professor.Professor;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -15,12 +19,12 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(of = "id")
+@EqualsAndHashCode(of = "id_turma")
 public class Turma {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long id_turma;
 
     private String nome;
 
@@ -28,27 +32,12 @@ public class Turma {
     @JoinColumn(name = "professor_id")
     private Professor professor;
 
-    @ManyToMany
-    @JoinTable(
-            name = "frequencia",
-            joinColumns = @JoinColumn(name = "turma_id"),
-            inverseJoinColumns = @JoinColumn(name = "aluno_id")
-    )
-    private List<Aluno> alunosFrequencia;
+    @OneToMany(mappedBy = "id_turma", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<AlunoTurma> alunosSituacao;
 
-    @ManyToMany
-    @JoinTable(
-            name = "nota",
-            joinColumns = @JoinColumn(name = "turma_id"),
-            inverseJoinColumns = @JoinColumn(name = "aluno_id")
-    )
-    private List<Aluno> alunosNotas;
+    @OneToMany(mappedBy = "id_turma", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<TurmaAlunoNota> alunosNotas;
 
-    @ManyToMany
-    @JoinTable(
-            name = "situacao",
-            joinColumns = @JoinColumn(name = "turma_id"),
-            inverseJoinColumns = @JoinColumn(name = "aluno_id")
-    )
-    private List<Aluno> alunosSituacao;
+    @OneToMany(mappedBy = "id_turma", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<TurmaAlunoFrequencia> alunosFrequencia;
 }

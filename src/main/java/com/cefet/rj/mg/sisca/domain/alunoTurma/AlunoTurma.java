@@ -1,8 +1,7 @@
 package com.cefet.rj.mg.sisca.domain.alunoTurma;
 
 import com.cefet.rj.mg.sisca.domain.aluno.Aluno;
-import com.cefet.rj.mg.sisca.domain.frequencia.Frequencia;
-import com.cefet.rj.mg.sisca.domain.nota.Nota;
+
 import com.cefet.rj.mg.sisca.domain.turma.Turma;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -10,6 +9,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Table(name = "ALUNOTURMA")
@@ -17,28 +17,31 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(of = "id")
+@EqualsAndHashCode(of = {"matricula_aluno", "id_turma"})
 public class AlunoTurma {
 
-        @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        private Long id;
+        @EmbeddedId
+        private TurmaAlunoId id;
 
-        @ManyToOne
-        @JoinColumn(name = "aluno_id")
-        private Aluno aluno;
+        @ManyToOne(fetch = FetchType.LAZY)
+        @MapsId("matriculaAluno")
+        @JoinColumn(name = "matricula_aluno")
+        private Aluno matricula_aluno;
 
-        @ManyToOne
-        @JoinColumn(name = "turma_id")
-        private Turma turma;
+        @ManyToOne(fetch = FetchType.LAZY)
+        @MapsId("idTurma")
+        @JoinColumn(name = "id_turma")
+        private Turma id_turma;
 
-        private String situacao;
+        @ManyToOne(fetch = FetchType.LAZY)
+        @JoinColumn(name = "id_status_aluno_turma")
+        private StatusAlunoTurma situacao;
 
-        @OneToMany(mappedBy = "alunoTurma", cascade = CascadeType.ALL)
-        private List<Nota> notas;
-
-        @OneToMany(mappedBy = "alunoTurma", cascade = CascadeType.ALL)
-        private List<Frequencia> frequencias;
-
+//        @OneToMany(mappedBy = "alunoTurma", cascade = CascadeType.ALL)
+//        private List<Nota> notas;
+//
+//        @OneToMany(mappedBy = "alunoTurma", cascade = CascadeType.ALL)
+//        private List<Frequencia> frequencias;
 
 }
+
