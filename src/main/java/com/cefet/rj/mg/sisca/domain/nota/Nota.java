@@ -9,22 +9,22 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Table(name = "NOTA")
-@Entity(name = "Nota")
-@Getter
-@NoArgsConstructor
-@AllArgsConstructor
-@EqualsAndHashCode(of = "id")
-public class Nota {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @ManyToOne
-    @JoinColumn(name = "aluno_turma_id")
-    private AlunoTurma alunoTurma;
-
-    private int p1;
-    private int p2;
-    private int pf;
-}
+//@Table(name = "NOTA")
+//@Entity(name = "Nota")
+//@Getter
+//@NoArgsConstructor
+//@AllArgsConstructor
+//@EqualsAndHashCode(of = "id")
+//public class Nota {
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    private Long id;
+//
+//    @ManyToOne
+//    @JoinColumn(name = "aluno_turma_id")
+//    private AlunoTurma alunoTurma;
+//
+//    private int p1;
+//    private int p2;
+//    private int pf;
+//}

@@ -1,6 +1,6 @@
 package com.cefet.rj.mg.sisca.controller;
 
-import com.cefet.rj.mg.sisca.domain.alunoTurma.AlunoTurmaService;
+import com.cefet.rj.mg.sisca.service.AlunoTurmaService;
 import com.cefet.rj.mg.sisca.domain.alunoTurma.DadosFrequenciaAlunoTurma;
 import com.cefet.rj.mg.sisca.domain.alunoTurma.DadosNotaAlunoTurma;
 import com.cefet.rj.mg.sisca.domain.alunoTurma.DadosSituacaoAlunoTurma;
@@ -17,21 +17,21 @@ public class AlunoTurmaController {
     @Autowired
     private AlunoTurmaService alunoTurmaService;
 
-    @GetMapping
-    public ResponseEntity<DadosSituacaoAlunoTurma> obterSituacao(@RequestParam Long alunoId, @RequestParam Long turmaId) {
-        DadosSituacaoAlunoTurma situacao = alunoTurmaService.obterSituacaoAlunoTurma(alunoId, turmaId);
-        return ResponseEntity.ok(situacao);
-    }
-
-    @GetMapping
-    public ResponseEntity<DadosNotaAlunoTurma> obterNota(@RequestParam Long alunoId, @RequestParam Long turmaId) {
-        DadosNotaAlunoTurma nota = alunoTurmaService.obterNotaAlunoTurma(alunoId, turmaId);
-        return ResponseEntity.ok(nota);
-    }
-
-    @GetMapping
-    public ResponseEntity<DadosFrequenciaAlunoTurma> obterFrequencia(@RequestParam Long alunoId, @RequestParam Long turmaId) {
-        DadosFrequenciaAlunoTurma frequencia = alunoTurmaService.obterFrequenciaAlunoTurma(alunoId, turmaId);
-        return ResponseEntity.ok(frequencia);
-    }
+//    @GetMapping
+//    public ResponseEntity<DadosSituacaoAlunoTurma> obterSituacao(@RequestParam Long alunoId, @RequestParam Long turmaId) {
+//        DadosSituacaoAlunoTurma situacao = alunoTurmaService.obterSituacaoAlunoTurma(alunoId, turmaId);
+//        return ResponseEntity.ok(situacao);
+//    }
+//
+//    @GetMapping
+//    public ResponseEntity<DadosNotaAlunoTurma> obterNota(@RequestParam Long alunoId, @RequestParam Long turmaId) {
+//        DadosNotaAlunoTurma nota = alunoTurmaService.obterNotaAlunoTurma(alunoId, turmaId);
+//        return ResponseEntity.ok(nota);
+//    }
+//
+//    @GetMapping
+//    public ResponseEntity<DadosFrequenciaAlunoTurma> obterFrequencia(@RequestParam Long alunoId, @RequestParam Long turmaId) {
+//        DadosFrequenciaAlunoTurma frequencia = alunoTurmaService.obterFrequenciaAlunoTurma(alunoId, turmaId);
+//        return ResponseEntity.ok(frequencia);
+//    }
 }

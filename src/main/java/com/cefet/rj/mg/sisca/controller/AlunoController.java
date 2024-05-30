@@ -1,6 +1,7 @@
 package com.cefet.rj.mg.sisca.controller;
 
 import com.cefet.rj.mg.sisca.domain.aluno.*;
+import com.cefet.rj.mg.sisca.service.AlunoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,10 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("alunos")
+@RequestMapping("/alunos")
 public class AlunoController {
 
     @Autowired
@@ -20,6 +20,11 @@ public class AlunoController {
 
     @Autowired
     private AlunoService alunoService;
+
+    @GetMapping("/teste")
+    public String teste(){
+        return "Wololo";
+    }
 
     @GetMapping
     public ResponseEntity<List<DadosListagemAluno>> listarTodos(){

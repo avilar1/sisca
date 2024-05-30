@@ -8,7 +8,9 @@ import java.time.LocalDateTime;
 public record DadosCadastroUsuario (
         @NotBlank
         String nome,
-        //String senha,
+
+        @NotBlank
+        String senha,
         @NotBlank
         String cpf,
         @NotBlank
