@@ -47,31 +47,31 @@ public class Usuario {
         this.ativo = false;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void atualizarUsuario(DadosAtualizaUsuario dados){
+        if (dados.nome() != null) {
+            this.nome = dados.nome();
+        }
+
+        if (dados.cpf() != null) {
+            this.nome = dados.cpf();
+        }
+
+        if (dados.email() != null) {
+            this.email = dados.email();
+
+        }
+
+        if (dados.telefone() != null) {
+            this.telefone = dados.telefone();
+        }
+
+        if (dados.data_nascimento() != null) {
+            this.data_nascimento = dados.data_nascimento();
+        }
+
+        if (dados.role() != null) {
+            this.role = dados.role();
+        }
     }
 
-    public void setSenha(String senha) {
-        this.senha = senha;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
-    }
-
-    public void setData_nascimento(LocalDate data_nascimento) {
-        this.data_nascimento = data_nascimento;
-    }
-
-    public void setRole(RoleEnum role) {
-        this.role = role;
-    }
 }
