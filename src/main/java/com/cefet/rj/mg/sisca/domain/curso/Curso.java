@@ -2,7 +2,6 @@ package com.cefet.rj.mg.sisca.domain.curso;
 
 import com.cefet.rj.mg.sisca.domain.aluno.Aluno;
 import com.cefet.rj.mg.sisca.domain.materia.Materia;
-import com.cefet.rj.mg.sisca.domain.turma.Turma;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -32,8 +31,6 @@ public class Curso {
     @ManyToMany(mappedBy = "cursos")
     private List<Aluno> alunos;
 
-    @ManyToMany(mappedBy = "cursos")
-    private List<Turma> turmas;
 
     @ManyToMany
     @JoinTable(

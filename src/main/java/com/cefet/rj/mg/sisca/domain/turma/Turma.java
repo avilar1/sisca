@@ -1,9 +1,9 @@
 package com.cefet.rj.mg.sisca.domain.turma;
 
-import com.cefet.rj.mg.sisca.domain.turmaAlunoFrequencia.TurmaAlunoFrequencia;
-import com.cefet.rj.mg.sisca.domain.turmaAlunoNota.TurmaAlunoNota;
 import com.cefet.rj.mg.sisca.domain.alunoTurma.AlunoTurma;
 import com.cefet.rj.mg.sisca.domain.professor.Professor;
+import com.cefet.rj.mg.sisca.domain.turmaAlunoFrequencia.TurmaAlunoFrequencia;
+import com.cefet.rj.mg.sisca.domain.turmaAlunoNota.TurmaAlunoNota;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
