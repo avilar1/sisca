@@ -1,10 +1,8 @@
 package com.cefet.rj.mg.sisca.domain.turma;
 
-import com.cefet.rj.mg.sisca.domain.TurmaAlunoFrequencia.TurmaAlunoFrequencia;
-import com.cefet.rj.mg.sisca.domain.TurmaAlunoNota.TurmaAlunoNota;
-import com.cefet.rj.mg.sisca.domain.aluno.Aluno;
+import com.cefet.rj.mg.sisca.domain.turmaAlunoFrequencia.TurmaAlunoFrequencia;
+import com.cefet.rj.mg.sisca.domain.turmaAlunoNota.TurmaAlunoNota;
 import com.cefet.rj.mg.sisca.domain.alunoTurma.AlunoTurma;
-import com.cefet.rj.mg.sisca.domain.funcionario.Funcionario;
 import com.cefet.rj.mg.sisca.domain.professor.Professor;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

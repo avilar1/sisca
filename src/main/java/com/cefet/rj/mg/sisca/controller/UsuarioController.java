@@ -34,6 +34,18 @@ public class UsuarioController {
 
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity detalharUsuario(@PathVariable Long id) {
+        var usuarioOptional = usuarioService.encontrarUsuario(id);
+
+        if (usuarioOptional.isPresent()) {
+            var usuario = usuarioOptional.get();
+            return ResponseEntity.ok(new DadosDetalhamentoUsuario(usuario));
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @PutMapping("/atualizar")
     @Transactional
     public ResponseEntity atualizaUsuario(@RequestBody DadosAtualizaUsuario dados){

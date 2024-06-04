@@ -1,4 +1,4 @@
-package com.cefet.rj.mg.sisca.domain.TurmaAlunoNota;
+package com.cefet.rj.mg.sisca.domain.turmaAlunoFrequencia;
 
 import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;
@@ -13,7 +13,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-public class TurmaAlunoNotaId implements Serializable {
+public class TurmaAlunoFrequenciaId implements Serializable {
     private Long matriculaAluno;
     private Long idTurma;
 }

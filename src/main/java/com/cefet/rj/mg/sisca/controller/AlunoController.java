@@ -2,12 +2,10 @@ package com.cefet.rj.mg.sisca.controller;
 
 import com.cefet.rj.mg.sisca.domain.aluno.*;
 import com.cefet.rj.mg.sisca.service.AlunoService;
+import com.cefet.rj.mg.sisca.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,6 +18,8 @@ public class AlunoController {
 
     @Autowired
     private AlunoService alunoService;
+
+    private UsuarioService usuarioService;
 
     @GetMapping("/teste")
     public String teste(){
@@ -34,6 +34,23 @@ public class AlunoController {
 
     }
 
+    @PostMapping
+    public ResponseEntity cadastrarAluno(@RequestBody DadosCadastroAluno dadosCadastroAluno,@RequestParam Long idUsuario) {
+        var usuarioOptional = usuarioService.encontrarUsuario(idUsuario);
+
+        if (usuarioOptional.isPresent()) {
+            var usuario = usuarioOptional.get();
+
+
+            Aluno novoAluno = new Aluno(dadosCadastroAluno, usuario);
+
+            alunoService.salvarAluno(novoAluno);
+            return ResponseEntity.ok(new DadosDetalhamentoAluno(novoAluno));
+        } else {
+            return ResponseEntity.notFound().build();
+
+        }
+    }
 //    public ResponseEntity listar(){
 //        var alunos = alunoRepository.findAll();
 //        return ResponseEntity.ok(alunos);
