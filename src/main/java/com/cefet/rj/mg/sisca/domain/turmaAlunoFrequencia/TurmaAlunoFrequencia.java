@@ -1,4 +1,4 @@
-package com.cefet.rj.mg.sisca.domain.TurmaAlunoFrequencia;
+package com.cefet.rj.mg.sisca.domain.turmaAlunoFrequencia;
 
 import com.cefet.rj.mg.sisca.domain.aluno.Aluno;
 import com.cefet.rj.mg.sisca.domain.turma.Turma;
@@ -8,7 +8,6 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 
 @Table(name = "TURMA_ALUNO_FREQUENCIA")

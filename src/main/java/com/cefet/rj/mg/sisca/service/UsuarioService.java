@@ -38,4 +38,12 @@ public class UsuarioService {
 
         return usuarioExistente;
     }
+
+    public Optional<Usuario> encontrarUsuario(Long id) {
+        var usuario = usuarioRepository.findById(id);
+        if(usuario == null){
+            throw new RuntimeException();
+        }
+        return usuario;
+    }
 }

@@ -31,6 +31,7 @@ public class Curso {
     @ManyToMany(mappedBy = "cursos")
     private List<Aluno> alunos;
 
+
     @ManyToMany
     @JoinTable(
             name = "CURSO_MATERIA",
@@ -39,4 +40,8 @@ public class Curso {
     )
     private List<Materia> materias;
 
+    public Curso(DadosCadastroCurso dados){
+        this.nome = dados.nome();
+        this.periodos = dados.periodos();
+    }
 }

@@ -1,6 +1,5 @@
 package com.cefet.rj.mg.sisca.domain.aluno;
 
-import com.cefet.rj.mg.sisca.domain.alunoTurma.AlunoTurma;
 import com.cefet.rj.mg.sisca.domain.curso.Curso;
 import com.cefet.rj.mg.sisca.domain.usuario.Usuario;
 import jakarta.persistence.*;
@@ -49,4 +48,13 @@ public class Aluno {
             inverseJoinColumns = @JoinColumn(name = "id_curso")
     )
     private List<Curso> cursos;
+
+
+    public Aluno(DadosCadastroAluno dados, Usuario usuario) {
+        this.usuario = usuario;
+        this.matricula_aluno = dados.matricula_aluno();
+        this.status = dados.status();
+        this.ano_matricula = dados.ano_matricula();
+        this.cursos = dados.cursos();
+    }
 }
