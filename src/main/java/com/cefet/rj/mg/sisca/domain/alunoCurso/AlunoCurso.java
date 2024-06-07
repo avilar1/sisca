@@ -34,6 +34,6 @@ public class AlunoCurso {
     @JoinColumn(name = "id_status")
     private StatusAlunoCurso status;
 
-    @Column(name = "ano_matricula", nullable = false)
-    private LocalDateTime anoMatricula;
+    @Column(name = "ano_matricula", length = 6)
+    private String ano_matricula;
 }
