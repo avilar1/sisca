@@ -29,4 +29,7 @@ public class Funcionario {
     @Column(name = "matricula_funcionario")
     private String matricula_funcionario;
 
+    public boolean isProfessor(Long id_funcionario){
+        return this.usuario.getRole() == RoleEnum.PROFESSOR;
+    }
 }
