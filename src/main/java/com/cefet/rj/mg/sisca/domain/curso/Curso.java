@@ -44,4 +44,16 @@ public class Curso {
         this.nome = dados.nome();
         this.periodos = dados.periodos();
     }
+
+    public void atualizarCurso(DadosAtualizaCurso dados) {
+
+        if(dados.nome() != null){
+            this.nome = dados.nome();
+        }
+
+        if(dados.periodos() != null) {
+            this.periodos = dados.periodos();
+        }
+
+    }
 }

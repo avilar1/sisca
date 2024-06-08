@@ -1,11 +1,9 @@
 package com.cefet.rj.mg.sisca.controller;
 
-import com.cefet.rj.mg.sisca.domain.curso.Curso;
-import com.cefet.rj.mg.sisca.domain.curso.CursoRepository;
-import com.cefet.rj.mg.sisca.domain.curso.DadosCadastroCurso;
-import com.cefet.rj.mg.sisca.domain.curso.DadosDetalhamentoCurso;
+import com.cefet.rj.mg.sisca.domain.curso.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -31,5 +29,18 @@ public class CursoController {
         }
     }
 
+    @PutMapping("/atualizar")
+    @Transactional
+    public ResponseEntity atualizaCurso(@RequestBody DadosAtualizaCurso dados){
+
+            Curso cursoExistente = cursoRepository.findById(dados.id_curso())
+                    .orElseThrow(() -> new RuntimeException("Curso não encontrado"));
+
+            cursoExistente.atualizarCurso(dados);
+
+            var curso = cursoRepository.save(cursoExistente);
+
+        return ResponseEntity.ok(new DadosDetalhamentoCurso(curso));
+    }
 
 }

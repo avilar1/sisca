@@ -1,13 +1,16 @@
 package com.cefet.rj.mg.sisca.controller;
 
+import com.cefet.rj.mg.sisca.domain.alunoTurma.AlunoTurma;
+import com.cefet.rj.mg.sisca.domain.alunoTurma.DadosDetalhamentoAlunoTurma;
+import com.cefet.rj.mg.sisca.infra.security.exception.CursoNotFoundException;
+import com.cefet.rj.mg.sisca.service.AlunoService;
 import com.cefet.rj.mg.sisca.service.AlunoTurmaService;
-import com.cefet.rj.mg.sisca.domain.alunoTurma.DadosFrequenciaAlunoTurma;
-import com.cefet.rj.mg.sisca.domain.alunoTurma.DadosNotaAlunoTurma;
-import com.cefet.rj.mg.sisca.domain.alunoTurma.DadosSituacaoAlunoTurma;
+import com.cefet.rj.mg.sisca.service.TurmaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -16,6 +19,55 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class AlunoTurmaController {
     @Autowired
     private AlunoTurmaService alunoTurmaService;
+
+    @Autowired
+    TurmaService turmaService;
+
+    @Autowired
+    AlunoService alunoService;
+
+    @PostMapping
+    public ResponseEntity cadastrarEmTurma(@RequestParam Long id_turma, @RequestParam Long id_aluno) {
+    var turmaOptional = turmaService.encontrarTurma(id_turma);
+    var alunoOptional = alunoService.detalharaluno(id_aluno) != null ? alunoService.detalharaluno(id_aluno) : null;
+
+        if (turmaOptional.isPresent() && alunoOptional != null) {
+
+//            var turma = turmaOptional.get();
+//            var aluno = alunoOptional;
+
+            try {
+                AlunoTurma alunoTurma = new AlunoTurma(id_turma, id_aluno);
+
+                alunoTurmaService.salvarAlunoTurma(alunoTurma);
+                return ResponseEntity.ok(new DadosDetalhamentoAlunoTurma(alunoTurma));
+            } catch (CursoNotFoundException e) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+            }
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("turma ou aluno não encontrados");
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //    @GetMapping
 //    public ResponseEntity<DadosSituacaoAlunoTurma> obterSituacao(@RequestParam Long alunoId, @RequestParam Long turmaId) {

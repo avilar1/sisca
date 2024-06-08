@@ -8,8 +8,6 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
 @Table(name = "ALUNO_CURSO")
 @Entity(name = "AlunoCurso")
 @Getter
@@ -36,4 +34,12 @@ public class AlunoCurso {
 
     @Column(name = "ano_matricula", length = 6)
     private String ano_matricula;
+
+    public AlunoCurso(DadosCadastroAlunoCurso dados) {
+
+        this.aluno = dados.aluno();
+        this.curso = dados.curso();
+        this.status = dados.status();
+        this.ano_matricula = dados.ano_matricula();
+    }
 }

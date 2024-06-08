@@ -6,6 +6,7 @@ import com.cefet.rj.mg.sisca.domain.curso.CursoRepository;
 import com.cefet.rj.mg.sisca.domain.curso.Curso;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CursoService  {
@@ -16,5 +17,7 @@ public class CursoService  {
     public List<Curso> buscarCursosPorIds(List<Long> ids) {
         return cursoRepository.findAllById(ids);
     }
+
+    public Optional<Curso> buscarCursoPorId(Long id_curso) { return cursoRepository.findById(id_curso);}
 
 }
