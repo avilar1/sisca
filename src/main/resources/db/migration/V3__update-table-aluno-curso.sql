@@ -1,0 +1,1 @@
+ALTER TABLE ALUNO_CURSO CHANGE COLUMN `ano_matricula` `ano_matricula` VARCHAR(6) NOT NULL;
