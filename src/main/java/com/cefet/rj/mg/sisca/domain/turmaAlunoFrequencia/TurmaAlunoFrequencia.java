@@ -32,5 +32,12 @@ public class TurmaAlunoFrequencia {
     private Turma id_turma;
 
     private LocalDate faltou;
+
+    public TurmaAlunoFrequencia( Aluno aluno, Turma turma, LocalDate faltou) {
+        this.id = new TurmaAlunoFrequenciaId(aluno.getId_aluno(), turma.getId_turma());
+        this.matricula_aluno = aluno;
+        this.id_turma = turma;
+        this.faltou = faltou;
+    }
 }
 

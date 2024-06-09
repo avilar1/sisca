@@ -4,10 +4,7 @@ import com.cefet.rj.mg.sisca.domain.alunoTurma.AlunoTurma;
 import com.cefet.rj.mg.sisca.domain.turmaAlunoFrequencia.TurmaAlunoFrequencia;
 import com.cefet.rj.mg.sisca.domain.turmaAlunoNota.TurmaAlunoNota;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Date;
 import java.util.List;
@@ -15,6 +12,7 @@ import java.util.List;
 @Table(name = "TURMA")
 @Entity(name = "Turma")
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id_turma")

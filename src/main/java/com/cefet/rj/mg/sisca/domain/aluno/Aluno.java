@@ -90,4 +90,9 @@ public class Aluno implements CursoInterface {
 
     }
 
+    public void setId_aluno(long l) {
+    }
+
+    public void setNome(String testeAluno) {
+    }
 }
