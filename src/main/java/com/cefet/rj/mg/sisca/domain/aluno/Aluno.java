@@ -1,17 +1,23 @@
 package com.cefet.rj.mg.sisca.domain.aluno;
 
+import com.cefet.rj.mg.sisca.domain.alunoCurso.AlunoCurso;
 import com.cefet.rj.mg.sisca.domain.curso.Curso;
-import com.cefet.rj.mg.sisca.domain.interfaces.CursoInterface;
+import com.cefet.rj.mg.sisca.domain.materia.Materia;
 import com.cefet.rj.mg.sisca.domain.usuario.Usuario;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.FetchMode;
+import org.hibernate.annotations.Fetch;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Table(name = "ALUNO")
 @Entity(name = "Aluno")
@@ -19,12 +25,13 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id_aluno")
-public class Aluno implements CursoInterface {
+public class Aluno {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_aluno")
     private Long id_aluno;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne
     @JoinColumn(name = "id_usuario")
     private Usuario usuario;
 
@@ -51,24 +58,21 @@ public class Aluno implements CursoInterface {
 //    @OneToMany(mappedBy = "aluno")
 //    private List<AlunoTurma> alunoTurmas;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+
+    @OneToMany
     @JoinTable(
             name = "ALUNO_CURSO",
-            joinColumns = @JoinColumn(name = "matricula_aluno", referencedColumnName = "matricula_aluno"),
+            joinColumns = @JoinColumn(name = "id_aluno"),
             inverseJoinColumns = @JoinColumn(name = "id_curso")
     )
-    private List<Curso> cursos = new ArrayList<>();
+    @JsonManagedReference
+    private List<Curso> cursos;
 
-
-
-    public Aluno(DadosCadastroAluno dados, Usuario usuario, Long id_curso) {
+    public Aluno(DadosCadastroAluno dados, Usuario usuario) {
         this.usuario = usuario;
         this.matricula_aluno = dados.matricula_aluno();
         this.status = dados.status();
         this.ano_matricula = dados.ano_matricula();
-
-        Curso curso = retornarCurso(id_curso);
-        this.cursos.add(curso);
     }
 
 
@@ -82,12 +86,6 @@ public class Aluno implements CursoInterface {
         if(dados.ano_matricula() != null) {
             this.ano_matricula = dados.ano_matricula();
         }
-
-        if(dados.id_curso() !=null){
-            Curso curso = retornarCurso(dados.id_curso());
-            this.cursos.add(curso);
-        }
-
     }
 
     public void setId_aluno(long l) {

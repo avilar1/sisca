@@ -6,7 +6,7 @@ import com.cefet.rj.mg.sisca.domain.curso.Curso;
 public record DadosCadastroAlunoCurso(
         Aluno aluno,
         Curso curso,
-        StatusAlunoCurso status,
+        int status,
         String ano_matricula
 ) {
 }

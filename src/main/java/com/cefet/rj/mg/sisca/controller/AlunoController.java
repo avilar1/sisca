@@ -1,8 +1,13 @@
 package com.cefet.rj.mg.sisca.controller;
 
 import com.cefet.rj.mg.sisca.domain.aluno.*;
+import com.cefet.rj.mg.sisca.domain.alunoCurso.AlunoCurso;
+import com.cefet.rj.mg.sisca.domain.alunoCurso.AlunoCursoRepository;
+import com.cefet.rj.mg.sisca.domain.alunoCurso.DadosCadastroAlunoCurso;
+import com.cefet.rj.mg.sisca.domain.curso.Curso;
 import com.cefet.rj.mg.sisca.infra.security.exception.CursoNotFoundException;
 import com.cefet.rj.mg.sisca.service.AlunoService;
+import com.cefet.rj.mg.sisca.service.CursoService;
 import com.cefet.rj.mg.sisca.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,12 +21,11 @@ import java.util.List;
 @RequestMapping("/alunos")
 public class AlunoController {
 
-    @Autowired
-    private AlunoRepository alunoRepository;
 
     @Autowired
     private AlunoService alunoService;
 
+    @Autowired
     private UsuarioService usuarioService;
 
     @GetMapping("/teste")
@@ -38,15 +42,17 @@ public class AlunoController {
     }
 
     @PostMapping
-    public ResponseEntity cadastrarAluno(@RequestBody DadosCadastroAluno dadosCadastroAluno,@RequestParam Long idUsuario, @RequestParam Long id_curso) {
+    public ResponseEntity cadastrarAluno(@RequestBody DadosCadastroAluno dadosCadastroAluno,@RequestParam Long idUsuario) {
         var usuarioOptional = usuarioService.encontrarUsuario(idUsuario);
+
 
         if (usuarioOptional.isPresent()) {
             var usuario = usuarioOptional.get();
 
             try {
-                Aluno novoAluno = new Aluno(dadosCadastroAluno, usuario, id_curso);
+                Aluno novoAluno = new Aluno(dadosCadastroAluno, usuario);
                 alunoService.salvarAluno(novoAluno);
+
                 return ResponseEntity.ok(new DadosDetalhamentoAluno(novoAluno));
             } catch (CursoNotFoundException e) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
@@ -62,7 +68,8 @@ public class AlunoController {
 
     @GetMapping("/{id}")
     public ResponseEntity detalharAluno(@PathVariable Long id) {
-            Aluno aluno = alunoService.detalharaluno(id);
+        Aluno aluno = alunoService.detalharaluno(id);
+
         return ResponseEntity.ok(new DadosDetalhamentoAluno(aluno));
     }
 

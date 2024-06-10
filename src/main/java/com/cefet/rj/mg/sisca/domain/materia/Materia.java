@@ -1,13 +1,12 @@
 package com.cefet.rj.mg.sisca.domain.materia;
 
-import com.cefet.rj.mg.sisca.domain.curso.Curso;
-import com.cefet.rj.mg.sisca.domain.interfaces.CursoInterface;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Table(name = "MATERIA")
@@ -16,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id_materia")
-public class Materia implements CursoInterface {
+public class Materia {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,13 +24,10 @@ public class Materia implements CursoInterface {
     @Column(nullable = false)
     private String nome;
 
-    @ManyToMany(mappedBy = "materias")
-    private List<Curso> cursos;
 
-    public Materia(DadosCadastroMateria dados, Long id_curso) {
+    public Materia(DadosCadastroMateria dados) {
         this.nome = dados.nome();
-        Curso curso = retornarCurso(id_curso);
-        this.cursos.add(curso);
+
     }
 
     public void atualizarMateria(DadosAtualizaMateria dados){

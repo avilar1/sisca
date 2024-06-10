@@ -38,7 +38,7 @@ public class AlunoTurmaController {
     @Autowired
     TurmaAlunoNotaRepository turmaAlunoNotaRepository;
 
-    @PostMapping
+    @PostMapping("/cadastrarEmTurma")
     public ResponseEntity cadastrarEmTurma(@RequestParam Long id_turma, @RequestParam Long id_aluno) {
     var turmaOptional = turmaService.encontrarTurma(id_turma);
     var alunoOptional = alunoService.detalharaluno(id_aluno) != null ? alunoService.detalharaluno(id_aluno) : null;
@@ -61,7 +61,7 @@ public class AlunoTurmaController {
         }
     }
 
-    @PostMapping
+    @PostMapping("/cadastrarFalta")
     public ResponseEntity cadastrarFalta(@RequestParam Long id_aluno, @RequestParam Long id_turma, @RequestParam LocalDate faltou){
         var turmaOptional = turmaService.encontrarTurma(id_turma);
         var alunoOptional = alunoService.detalharaluno(id_aluno) != null ? alunoService.detalharaluno(id_aluno) : null;
@@ -83,7 +83,7 @@ public class AlunoTurmaController {
         }
     }
 
-    @PostMapping
+    @PostMapping("/cadastrarNota")
     public ResponseEntity cadastrarNota(@RequestParam Long id_aluno, @RequestParam Long id_turma, @RequestParam Float p1, @RequestParam Float p2, @RequestParam Float pf){
         var turmaOptional = turmaService.encontrarTurma(id_turma);
         var alunoOptional = alunoService.detalharaluno(id_aluno) != null ? alunoService.detalharaluno(id_aluno) : null;

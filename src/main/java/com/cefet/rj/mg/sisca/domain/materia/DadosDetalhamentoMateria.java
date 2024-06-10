@@ -5,11 +5,9 @@ import com.cefet.rj.mg.sisca.domain.curso.Curso;
 import java.util.List;
 
 public record DadosDetalhamentoMateria(
-        String nome,
-        List<Curso> cursos
+        String nome
 ) {
     public DadosDetalhamentoMateria(Materia materia){
-        this(materia.getNome(),
-                materia.getCursos());
+        this(materia.getNome());
     }
 }

@@ -1,5 +1,6 @@
 package com.cefet.rj.mg.sisca.domain.aluno;
 
+import com.cefet.rj.mg.sisca.domain.alunoCurso.AlunoCurso;
 import com.cefet.rj.mg.sisca.domain.curso.Curso;
 import com.cefet.rj.mg.sisca.domain.usuario.Usuario;
 

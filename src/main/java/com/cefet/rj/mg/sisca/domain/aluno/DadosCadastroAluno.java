@@ -10,8 +10,8 @@ public record DadosCadastroAluno(
         Usuario usuario,
         int matricula_aluno,
         int status,
-        String ano_matricula,
-        List<Curso> cursos
+        String ano_matricula
+//        List<Curso> cursos
 ) {
 
 }

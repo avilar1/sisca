@@ -2,6 +2,7 @@ package com.cefet.rj.mg.sisca.controller;
 
 import com.cefet.rj.mg.sisca.domain.materia.*;
 import com.cefet.rj.mg.sisca.infra.security.exception.CursoNotFoundException;
+import com.cefet.rj.mg.sisca.service.CursoService;
 import com.cefet.rj.mg.sisca.service.MateriaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,8 +21,9 @@ public class MateriaController {
     private MateriaService materiaService;
 
     @PostMapping("/cadastrar")
-    public ResponseEntity cadastrarMateria(@RequestBody DadosCadastroMateria dadosCadastroMateria, @RequestParam Long id_curso){
-        var materia = materiaRepository.save(new Materia(dadosCadastroMateria, id_curso));
+    public ResponseEntity cadastrarMateria(@RequestBody DadosCadastroMateria dadosCadastroMateria){
+
+        var materia = materiaRepository.save(new Materia(dadosCadastroMateria));
         return ResponseEntity.ok(new DadosDetalhamentoMateria(materia));
     }
 
