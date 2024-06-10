@@ -2,6 +2,7 @@ package com.cefet.rj.mg.sisca.service;
 
 import com.cefet.rj.mg.sisca.domain.aluno.Aluno;
 import com.cefet.rj.mg.sisca.domain.aluno.AlunoRepository;
+import com.cefet.rj.mg.sisca.domain.aluno.DadosAtualizaAluno;
 import com.cefet.rj.mg.sisca.domain.aluno.DadosListagemAluno;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,4 +32,24 @@ public class AlunoService {
     public Aluno salvarAluno(Aluno aluno) {
         return alunoRepository.save(aluno);
     }
+
+    public Aluno atualizarAluno(DadosAtualizaAluno dados){
+
+        Aluno alunoExistente = alunoRepository.findById(dados.id_aluno())
+                .orElseThrow(() -> new RuntimeException("Aluno não encontrado"));
+
+        alunoExistente.atualizarAluno(dados);
+
+        alunoRepository.save(alunoExistente);
+
+        return alunoExistente;
+    }
+
+    public Aluno pegarUmAluno(Long id) {
+        Aluno alunoExistente = alunoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Aluno não encontrado"));
+
+        return alunoExistente;
+    }
+
 }

@@ -8,8 +8,6 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
 @Table(name = "ALUNO_CURSO")
 @Entity(name = "AlunoCurso")
 @Getter
@@ -18,22 +16,31 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(of = "id")
 public class AlunoCurso {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @EmbeddedId
+    private AlunoCursoId id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "matricula_aluno")
-    private Aluno aluno;
-
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne
+    @MapsId("id_curso")
     @JoinColumn(name = "id_curso")
     private Curso curso;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_status")
-    private StatusAlunoCurso status;
+    @OneToOne
+    @MapsId("id_aluno")
+    @JoinColumn(name = "id_aluno")
+    private Aluno aluno;
 
-    @Column(name = "ano_matricula", length = 6)
+    @Column(nullable = false)
+    private int id_status;
+
+    @Column(name = "ano_matricula", nullable = false, length = 6)
     private String ano_matricula;
+
+    public AlunoCurso(Aluno aluno, Curso curso, int status, String ano_matricula) {
+        AlunoCursoId id = new AlunoCursoId(curso.getId_curso(), aluno.getId_aluno());
+        this.aluno = aluno;
+        this.curso = curso;
+        this.id = id;
+        this.id_status = status;
+        this.ano_matricula = ano_matricula;
+    }
 }

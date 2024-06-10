@@ -1,8 +1,12 @@
 package com.cefet.rj.mg.sisca.domain.turma;
 
+import java.util.Date;
+
 public record DadosCadastroTurma(
-        String nome,
-        Long idProfessor
+
+        Long id_funcionario,
+        Long id_materia,
+        Date semestre_turma
 
 ) {
 }

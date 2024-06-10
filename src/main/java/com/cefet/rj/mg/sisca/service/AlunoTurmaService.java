@@ -1,19 +1,20 @@
 package com.cefet.rj.mg.sisca.service;
 
-import com.cefet.rj.mg.sisca.domain.aluno.Aluno;
-import com.cefet.rj.mg.sisca.domain.alunoTurma.*;
-
-import com.cefet.rj.mg.sisca.domain.turma.Turma;
+import com.cefet.rj.mg.sisca.domain.alunoTurma.AlunoTurma;
+import com.cefet.rj.mg.sisca.domain.alunoTurma.AlunoTurmaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class AlunoTurmaService {
 
-//    @Autowired
-//    private AlunoTurmaRepository alunoTurmaRepository;
+        @Autowired
+        private AlunoTurmaRepository alunoTurmaRepository;
+    public AlunoTurma salvarAlunoTurma(AlunoTurma alunoTurma) {
+        return alunoTurmaRepository.save(alunoTurma);
+    }
+
+
 //
 //    public DadosSituacaoAlunoTurma obterSituacaoAlunoTurma(Long alunoId, Long turmaId) {
 //        List<AlunoTurma> alunoTurmaList = alunoTurmaRepository.findByAlunoIdAndTurmaId(alunoId, turmaId);
