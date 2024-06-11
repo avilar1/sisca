@@ -1,6 +1,7 @@
 package com.cefet.rj.mg.sisca.service;
 
 import com.cefet.rj.mg.sisca.domain.materia.DadosAtualizaMateria;
+import com.cefet.rj.mg.sisca.domain.materia.DadosListagemMateria;
 import com.cefet.rj.mg.sisca.domain.materia.Materia;
 import com.cefet.rj.mg.sisca.domain.materia.MateriaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,12 +9,19 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class MateriaService {
 
     @Autowired
     private MateriaRepository materiaRepository;
+
+    public List<DadosListagemMateria> listarTodas() {
+        return materiaRepository.findAll().stream()
+                .map(DadosListagemMateria::new)
+                .collect(Collectors.toList());
+    }
 
     public List<Materia> buscarMateriasPorIds(List<Long> ids) {
         return materiaRepository.findAllById(ids);

@@ -1,14 +1,13 @@
 package com.cefet.rj.mg.sisca.domain.aluno;
 
-import com.cefet.rj.mg.sisca.domain.alunoCurso.AlunoCurso;
 import com.cefet.rj.mg.sisca.domain.curso.Curso;
-import com.cefet.rj.mg.sisca.domain.usuario.Usuario;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
 public record DadosDetalhamentoAluno(
+        Long id_aluno,
         String nome,
         String cpf,
         String email,
@@ -21,7 +20,9 @@ public record DadosDetalhamentoAluno(
         List<Curso> cursos
 ) {
     public DadosDetalhamentoAluno(Aluno aluno) {
-        this(aluno.getUsuario().getNome(),
+        this(
+                aluno.getId_aluno(),
+                aluno.getUsuario().getNome(),
                 aluno.getUsuario().getCpf(),
                 aluno.getUsuario().getEmail(),
                 aluno.getUsuario().getTelefone(),
