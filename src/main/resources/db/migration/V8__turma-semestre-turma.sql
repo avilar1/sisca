@@ -1,0 +1,1 @@
+ALTER TABLE TURMA CHANGE COLUMN `semestre_turma` `semestre_turma` VARCHAR(6) NOT NULL ;

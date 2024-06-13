@@ -1,6 +1,8 @@
 package com.cefet.rj.mg.sisca.domain.turma;
 
 import com.cefet.rj.mg.sisca.domain.alunoTurma.AlunoTurma;
+import com.cefet.rj.mg.sisca.domain.materia.Materia;
+import com.cefet.rj.mg.sisca.domain.professor.Professor;
 import com.cefet.rj.mg.sisca.domain.turmaAlunoFrequencia.TurmaAlunoFrequencia;
 import com.cefet.rj.mg.sisca.domain.turmaAlunoNota.TurmaAlunoNota;
 import jakarta.persistence.*;
@@ -22,39 +24,44 @@ public class Turma {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id_turma;
 
-    private String nome;
+    @ManyToOne
+    @JoinColumn(name = "id_funcionario")
+    private Professor professor;
 
+    @ManyToOne
+    @JoinColumn(name = "id_materia")
+    private Materia materia;
 
-    @Column(name = "id_funcionario")
-    private Long id_funcionario;
+    @Column(name = "semestre_turma", nullable = false, length = 6)
+    private String semestre_turma;
 
 //    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "professor_id")
+//    @JoinColumn(name = "id_funcionario")
 //    private Professor professor;
 
-    private Long id_materia;
+//    @OneToMany(mappedBy = "id_turma", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<AlunoTurma> alunosSituacao;
+//
+//    @OneToMany(mappedBy = "id_turma", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<TurmaAlunoNota> alunosNotas;
+//
+//    @OneToMany(mappedBy = "id_turma", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<TurmaAlunoFrequencia> alunosFrequencia;
 
-    private Date semestre_turma = new Date();
-
-    @OneToMany(mappedBy = "id_turma", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<AlunoTurma> alunosSituacao;
-
-    @OneToMany(mappedBy = "id_turma", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<TurmaAlunoNota> alunosNotas;
-
-    @OneToMany(mappedBy = "id_turma", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<TurmaAlunoFrequencia> alunosFrequencia;
-
-    public Turma(DadosCadastroTurma dadosCadastroTurma) {
-        this.id_materia = dadosCadastroTurma.id_materia();
-        this.id_funcionario = dadosCadastroTurma.id_funcionario();
+    public Turma(DadosCadastroTurma dadosCadastroTurma, Professor professor, Materia materia) {
+        this.professor = professor;
+        this.materia = materia;
         this.semestre_turma = dadosCadastroTurma.semestre_turma();
-        this.nome = this.id_turma.toString() == null ? "0" +
-                dadosCadastroTurma.id_funcionario().toString() +
-                dadosCadastroTurma.semestre_turma().toString() :
-                dadosCadastroTurma.id_materia().toString() +
-                dadosCadastroTurma.id_funcionario().toString() +
-                dadosCadastroTurma.semestre_turma().toString();
+    }
+
+    public void atualizar(DadosAtualizaTurma dadosAtualizaTurma, Materia materia, Professor professor) {
+        if(dadosAtualizaTurma.semestre_turma() != null) {
+            this.semestre_turma = dadosAtualizaTurma.semestre_turma();
+        }
+
+        this.materia = materia;
+        this.professor = professor;
+
     }
 
 

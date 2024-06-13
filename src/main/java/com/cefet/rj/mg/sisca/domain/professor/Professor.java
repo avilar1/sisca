@@ -1,18 +1,20 @@
 package com.cefet.rj.mg.sisca.domain.professor;
 
 import com.cefet.rj.mg.sisca.domain.funcionario.Funcionario;
+import com.cefet.rj.mg.sisca.domain.funcionario.RoleTipoFuncionarioEnum;
 import com.cefet.rj.mg.sisca.domain.usuario.Usuario;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Entity(name = "Professor")
-@PrimaryKeyJoinColumn(name = "id_funcionario")
+@Entity
 @Getter
+@Setter
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
+@DiscriminatorValue("PROFESSOR")
 public class Professor extends Funcionario{
+
+    public Professor(Usuario usuario, int matricula_funcionario) {
+        super(usuario, matricula_funcionario);
+    }
 
 }

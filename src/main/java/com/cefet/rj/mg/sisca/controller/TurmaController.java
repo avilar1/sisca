@@ -1,44 +1,52 @@
 package com.cefet.rj.mg.sisca.controller;
 
-import com.cefet.rj.mg.sisca.domain.turma.DadosCadastroTurma;
-import com.cefet.rj.mg.sisca.domain.turma.DadosDetalhamentoTurma;
-import com.cefet.rj.mg.sisca.domain.turma.Turma;
+import com.cefet.rj.mg.sisca.domain.aluno.DadosListagemAluno;
+import com.cefet.rj.mg.sisca.domain.materia.Materia;
+import com.cefet.rj.mg.sisca.domain.professor.Professor;
+import com.cefet.rj.mg.sisca.domain.professor.ProfessorService;
+import com.cefet.rj.mg.sisca.domain.turma.*;
 import com.cefet.rj.mg.sisca.infra.security.exception.CursoNotFoundException;
-import com.cefet.rj.mg.sisca.service.FuncionarioService;
 import com.cefet.rj.mg.sisca.service.MateriaService;
 import com.cefet.rj.mg.sisca.service.TurmaService;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
+@RequestMapping("turma")
 public class TurmaController {
 
     @Autowired
-    FuncionarioService funcionarioService;
+    ProfessorService professorService;
     @Autowired
     MateriaService materiaService;
     @Autowired
     TurmaService turmaService;
+    @Autowired
+    private TurmaRepository turmaRepository;
 
-    @PostMapping
+    @GetMapping("/listarTodas")
+    public ResponseEntity<List<DadosDetalhamentoTurma>> listarTodos(){
+
+        List<DadosDetalhamentoTurma> turmas = turmaService.listarTodas();
+        return ResponseEntity.ok(turmas);
+    }
+
+    @PostMapping("/cadastrar")
     public ResponseEntity cadastrarTurma(@RequestBody DadosCadastroTurma dadosCadastroTurma) {
-        var funcionarioOptional = funcionarioService.encontrarfuncionario(dadosCadastroTurma.id_funcionario());
-
+        Professor professor = professorService.listarProfessor(dadosCadastroTurma.id_funcionario());
         var materiaOptional = materiaService.buscarMateriaPorId(dadosCadastroTurma.id_materia());
 
-        if (funcionarioOptional.isPresent() && materiaOptional.isPresent()) {
-
-            var funcionario = funcionarioOptional.get();
-            var materia = materiaOptional.get();
+        if (materiaOptional.isPresent()) {
+            Materia materia = materiaOptional.get();
 
             try {
-                Turma novaTurma = new Turma(dadosCadastroTurma);
+                Turma novaTurma = new Turma(dadosCadastroTurma, professor, materia);
 
                 turmaService.salvarTurma(novaTurma);
                 return ResponseEntity.ok(new DadosDetalhamentoTurma(novaTurma));
@@ -61,4 +69,29 @@ public class TurmaController {
         }
 
     }
-}
+
+    @GetMapping("/periodo/{periodo}")
+    public ResponseEntity pegarTurmaPeriodo(@PathVariable String periodo) {
+        List<Turma> turmas = turmaService.turmaPorPeriodo(periodo);
+        return ResponseEntity.ok(turmas);
+    }
+
+    @PutMapping("/atualizar")
+    public ResponseEntity atualizarTurma(@RequestBody DadosAtualizaTurma dadosAtualizaTurma) {
+        Turma turma = turmaService.pegarUmaTurma(dadosAtualizaTurma.id_turma());
+        Materia materia = turma.getMateria();
+        Professor professor = turma.getProfessor();
+
+        if(dadosAtualizaTurma.id_materia() != null && dadosAtualizaTurma.id_materia() != turma.getMateria().getId_materia()) {
+            materia = materiaService.buscarMateria(dadosAtualizaTurma.id_materia());
+        }
+
+        if(dadosAtualizaTurma.id_funcionario() != null && dadosAtualizaTurma.id_funcionario() != turma.getProfessor().getId_funcionario()) {
+            professor = professorService.listarProfessor(dadosAtualizaTurma.id_funcionario());
+        }
+
+        turma.atualizar(dadosAtualizaTurma, materia, professor);
+        turmaRepository.save(turma);
+        return ResponseEntity.ok(new DadosDetalhamentoTurma(turma));
+    }
+ }

@@ -43,4 +43,11 @@ public class MateriaService {
     public Optional<Materia> buscarMateriaPorId(Long id_materia) {
         return materiaRepository.findById(id_materia);
     }
+
+    public Materia buscarMateria(Long id_materia) {
+        Materia materiaExistente = materiaRepository.findById(id_materia)
+                .orElseThrow(() -> new RuntimeException("Matéria não encontrado"));
+
+        return materiaExistente;
+    }
 }

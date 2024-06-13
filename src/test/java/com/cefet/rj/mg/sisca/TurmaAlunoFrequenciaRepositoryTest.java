@@ -37,7 +37,6 @@ public class TurmaAlunoFrequenciaRepositoryTest {
 
         Turma turma = new Turma();
         turma.setId_turma(1L);
-        turma.setNome("Teste Turma");
         turmaRepository.save(turma);
 
         LocalDate dataFalta = LocalDate.now();

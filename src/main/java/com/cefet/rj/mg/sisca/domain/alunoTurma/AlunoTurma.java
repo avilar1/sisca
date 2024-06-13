@@ -12,44 +12,41 @@ import lombok.NoArgsConstructor;
 
 import java.util.Optional;
 
-@Table(name = "ALUNOTURMA")
+@Table(name = "TURMA_ALUNO")
 @Entity(name = "AlunoTurma")
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(of = {"matricula_aluno", "id_turma"})
 public class AlunoTurma {
 
         @EmbeddedId
         private TurmaAlunoId id;
 
-        @ManyToOne(fetch = FetchType.LAZY)
-        @MapsId("matriculaAluno")
-        @JoinColumn(name = "matricula_aluno")
-        private Aluno matricula_aluno;
+        @ManyToOne
+        @MapsId("idAluno")
+        @JoinColumn(name = "id_aluno")
+        private Aluno aluno;
 
-        @ManyToOne(fetch = FetchType.LAZY)
+        @ManyToOne
         @MapsId("idTurma")
         @JoinColumn(name = "id_turma")
-        private Turma id_turma;
+        private Turma turma;
 
-        @ManyToOne(fetch = FetchType.LAZY)
-        @JoinColumn(name = "id_status_aluno_turma")
-        private StatusAlunoTurma situacao;
+        @Enumerated(EnumType.STRING)
+        @Column(name = "status_aluno_turma")
+        private StatusAlunoTurma  situacao;
 
-        public AlunoTurma(Long idTurma, Long idAluno) {
-                AlunoService alunoService = new AlunoService();
-                TurmaService turmaService = new TurmaService();
-                TurmaAlunoId turmaAlunoId = new TurmaAlunoId(idAluno, idTurma);
+        public AlunoTurma(Turma turma, Aluno aluno, StatusAlunoTurma situacao) {
+                TurmaAlunoId turmaAlunoId = new TurmaAlunoId(aluno.getId_aluno(), turma.getId_turma());
+
                 this.id = turmaAlunoId;
-                this.matricula_aluno = alunoService.detalharaluno(idAluno);
-                Optional<Turma> turmaOptional = turmaService.encontrarTurma(idTurma);
-                if (turmaOptional.isPresent()) {
-                        this.id_turma = turmaOptional.get();
-                } else {
-                        throw new IllegalArgumentException("Turma com id " + idTurma + " não encontrada");
-                }
+                this.aluno = aluno;
+                this.turma = turma;
+                this.situacao = situacao;
+        }
 
+        public void trancarMatricula() {
+                this.situacao = StatusAlunoTurma.TRANCADO;
         }
 
 
