@@ -2,8 +2,10 @@ package com.cefet.rj.mg.sisca.domain.curso;
 
 import com.cefet.rj.mg.sisca.domain.aluno.Aluno;
 import com.cefet.rj.mg.sisca.domain.alunoCurso.AlunoCurso;
+import com.cefet.rj.mg.sisca.domain.cursoGrade.CursoGrade;
 import com.cefet.rj.mg.sisca.domain.materia.Materia;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -36,13 +38,10 @@ public class Curso {
     @JsonBackReference
     private List<Aluno> alunos;
 
-    @ManyToMany
-    @JoinTable(
-            name = "CURSO_GRADE",
-            joinColumns = @JoinColumn(name = "id_curso"),
-            inverseJoinColumns = @JoinColumn(name = "id_materia")
-    )
-    private List<Materia> materias;
+    @OneToMany(mappedBy = "curso")
+    @JsonManagedReference
+    private List<CursoGrade> cursoGrades;
+
 
     public Curso(DadosCadastroCurso dados){
         this.nome = dados.nome();
