@@ -1,7 +1,11 @@
 package com.cefet.rj.mg.sisca.controller;
 
+import com.cefet.rj.mg.sisca.domain.aluno.Aluno;
 import com.cefet.rj.mg.sisca.domain.alunoTurma.AlunoTurma;
 import com.cefet.rj.mg.sisca.domain.alunoTurma.DadosDetalhamentoAlunoTurma;
+import com.cefet.rj.mg.sisca.domain.alunoTurma.StatusAlunoTurma;
+import com.cefet.rj.mg.sisca.domain.alunoTurma.TurmaAlunoId;
+import com.cefet.rj.mg.sisca.domain.turma.Turma;
 import com.cefet.rj.mg.sisca.domain.turmaAlunoFrequencia.TurmaAlunoFrequencia;
 import com.cefet.rj.mg.sisca.domain.turmaAlunoFrequencia.TurmaAlunoFrequenciaRepository;
 import com.cefet.rj.mg.sisca.domain.turmaAlunoNota.TurmaAlunoNota;
@@ -10,15 +14,15 @@ import com.cefet.rj.mg.sisca.infra.security.exception.CursoNotFoundException;
 import com.cefet.rj.mg.sisca.service.AlunoService;
 import com.cefet.rj.mg.sisca.service.AlunoTurmaService;
 import com.cefet.rj.mg.sisca.service.TurmaService;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Controller
 @RequestMapping("/situacaoAlunoTurma")
@@ -38,27 +42,42 @@ public class AlunoTurmaController {
     @Autowired
     TurmaAlunoNotaRepository turmaAlunoNotaRepository;
 
+    @GetMapping("/{idTurma}")
+    public ResponseEntity pegarUmaTurma(@PathVariable Long idTurma) {
+        List<DadosDetalhamentoAlunoTurma> alunoTurma = alunoTurmaService.buscarAlunosPorTurma(idTurma);
+
+        return ResponseEntity.ok(alunoTurma);
+    }
+
     @PostMapping("/cadastrarEmTurma")
     public ResponseEntity cadastrarEmTurma(@RequestParam Long id_turma, @RequestParam Long id_aluno) {
-    var turmaOptional = turmaService.encontrarTurma(id_turma);
-    var alunoOptional = alunoService.detalharaluno(id_aluno) != null ? alunoService.detalharaluno(id_aluno) : null;
+        Turma turma = turmaService.pegarUmaTurma(id_turma);
+        Aluno aluno = alunoService.pegarUmAluno(id_aluno);
 
-        if (turmaOptional.isPresent() && alunoOptional != null) {
+        try {
+            AlunoTurma alunoTurma = new AlunoTurma(turma, aluno, StatusAlunoTurma.CURSANDO);
 
-//            var turma = turmaOptional.get();
-//            var aluno = alunoOptional;
-
-            try {
-                AlunoTurma alunoTurma = new AlunoTurma(id_turma, id_aluno);
-
-                alunoTurmaService.salvarAlunoTurma(alunoTurma);
-                return ResponseEntity.ok(new DadosDetalhamentoAlunoTurma(alunoTurma));
-            } catch (CursoNotFoundException e) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-            }
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("turma ou aluno não encontrados");
+            alunoTurmaService.salvarAlunoTurma(alunoTurma);
+            return ResponseEntity.ok(new DadosDetalhamentoAlunoTurma(alunoTurma));
+        } catch (CursoNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
+    }
+
+    @PutMapping("/trancarMatricula")
+    public ResponseEntity<AlunoTurma> trancarMatricula(@RequestParam Long id_turma, @RequestParam Long id_aluno) {
+        AlunoTurma alunoTurma = alunoTurmaService.buscarAlunoPorTurma(id_aluno, id_turma);
+        alunoTurmaService.trancarMatricula(alunoTurma);
+
+        return ResponseEntity.ok(alunoTurma);
+    }
+
+    @DeleteMapping("/deletar")
+    public ResponseEntity deletarAlunoTurma(@RequestParam Long id_turma, @RequestParam Long id_aluno) {
+        AlunoTurma alunoTurma = alunoTurmaService.buscarAlunoPorTurma(id_aluno, id_turma);
+        alunoTurmaService.deletarAlunoTurma(alunoTurma);
+
+        return ResponseEntity.ok(alunoTurma);
     }
 
     @PostMapping("/cadastrarFalta")

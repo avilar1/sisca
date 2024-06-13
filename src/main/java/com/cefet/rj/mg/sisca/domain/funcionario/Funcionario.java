@@ -10,24 +10,29 @@ import lombok.NoArgsConstructor;
 
 @Table(name = "FUNCIONARIO")
 @Entity(name = "Funcionario")
-@Inheritance(strategy = InheritanceType.JOINED)
-@DiscriminatorColumn(name = "dtype")
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id_funcionario")
+@DiscriminatorColumn(name="tipo_funcionario")
 public class Funcionario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id_funcionario;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne
     @JoinColumn(name = "id_usuario")
     private Usuario usuario;
 
+
     @Column(name = "matricula_funcionario")
-    private String matricula_funcionario;
+    private int matricula_funcionario;
+
+    public Funcionario(Usuario usuario, int matricula_funcionario) {
+        this.usuario = usuario;
+        this.matricula_funcionario = matricula_funcionario;
+    }
 
     public boolean isProfessor(Long id_funcionario){
         return this.usuario.getRole() == RoleEnum.PROFESSOR;

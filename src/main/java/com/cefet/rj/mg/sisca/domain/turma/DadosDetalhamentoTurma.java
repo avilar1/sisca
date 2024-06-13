@@ -9,24 +9,20 @@ import java.util.List;
 
 public record DadosDetalhamentoTurma(
         Long id_turma,
-        String nome,
         Long id_funcionario,
+        String nome_professor,
         Long id_materia,
-        Date semestre_turma,
-        List<AlunoTurma> alunosSituacao,
-        List<TurmaAlunoNota> alunosNotas,
-        List<TurmaAlunoFrequencia> alunosFrequencia
+        String nome_materia,
+        String semestre_turma
 ) {
     public DadosDetalhamentoTurma(Turma turma){
         this(
                 turma.getId_turma(),
-                turma.getNome(),
-                turma.getId_funcionario(),
-                turma.getId_materia(),
-                turma.getSemestre_turma(),
-                turma.getAlunosSituacao(),
-                turma.getAlunosNotas(),
-                turma.getAlunosFrequencia()
+                turma.getProfessor().getId_funcionario(),
+                turma.getProfessor().getUsuario().getNome(),
+                turma.getMateria().getId_materia(),
+                turma.getMateria().getNome(),
+                turma.getSemestre_turma()
         );
     }
 }
