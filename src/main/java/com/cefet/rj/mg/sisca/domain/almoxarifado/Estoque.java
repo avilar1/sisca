@@ -1,9 +1,11 @@
 package com.cefet.rj.mg.sisca.domain.almoxarifado;
+
 import com.cefet.rj.mg.sisca.domain.funcionario.Funcionario;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDate;
+import java.util.Date;
+
 @Table(name = "ESTOQUE")
 @Entity(name = "Estoque")
 @Getter
@@ -17,9 +19,8 @@ public class Estoque {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id_estoque;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_produto", nullable = false)
-    private Produto produto;
+    @Column(name = "id_produto", nullable = false)
+    private Long IdProduto;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_funcionario", nullable = false)
@@ -31,5 +32,14 @@ public class Estoque {
     private String descricao;
 
     @Column(name = "data_transacao", nullable = false)
-    private LocalDate dataTransacao;
+    @Temporal(TemporalType.DATE)
+    private Date dataTransacao;
+
+    public Estoque(DadosCadastroEstoque dados, Funcionario funcionario) {
+        this.IdProduto = dados.idProduto();
+        this.funcionario = funcionario;
+        this.quantidade = dados.quantidade();
+        this.descricao = dados.descricao();
+        this.dataTransacao = dados.dataTransacao();
+    }
 }

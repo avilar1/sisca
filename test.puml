@@ -1,0 +1,99 @@
+@startuml
+class com.cefet.rj.mg.sisca.domain.aluno.Aluno {
+- Long id_aluno
+- Usuario usuario
+- int matricula_aluno
+- int status
+- String ano_matricula
+- BigDecimal valor_mensalidade
+- List<Curso> cursos
++ void atualizarAluno(DadosAtualizaAluno)
++ void setId_aluno(long)
++ void setNome(String)
+}
+
+
+class com.cefet.rj.mg.sisca.domain.aluno.DadosDetalhamentoAluno {
+- Long id_aluno
+- String nome
+- String cpf
+- String email
+- String telefone
+- LocalDate data_nascimento
+- int matricula_aluno
+- int status
+- String ano_matricula
+- BigDecimal valor_mensalidade
+- List<Curso> cursos
++ String ano_matricula()
++ String nome()
++ String cpf()
++ List<Curso> cursos()
++ String telefone()
++ LocalDate data_nascimento()
++ BigDecimal valor_mensalidade()
++ Long id_aluno()
++ int status()
++ String email()
++ int matricula_aluno()
+}
+
+
+class com.cefet.rj.mg.sisca.domain.aluno.DadosCadastroAluno {
+- Usuario usuario
+- int matricula_aluno
+- int status
+- String ano_matricula
++ String ano_matricula()
++ int status()
++ Usuario usuario()
++ int matricula_aluno()
+}
+
+
+class com.cefet.rj.mg.sisca.domain.aluno.DadosListagemAluno {
+- Long id_aluno
+- String nome
+- String cpf
+- String email
+- String telefone
+- LocalDate data_nascimento
+- int matricula_aluno
+- int status
+- String ano_matricula
+- BigDecimal valor_mensalidade
+- List<Curso> cursos
++ String ano_matricula()
++ String nome()
++ String cpf()
++ List<Curso> cursos()
++ String telefone()
++ LocalDate data_nascimento()
++ BigDecimal valor_mensalidade()
++ Long id_aluno()
++ int status()
++ String email()
++ int matricula_aluno()
+}
+
+
+interface com.cefet.rj.mg.sisca.domain.aluno.AlunoRepository {
+}
+class com.cefet.rj.mg.sisca.domain.aluno.DadosAtualizaAluno {
+- Long id_aluno
+- Integer matricula_aluno
+- Integer status
+- String ano_matricula
+- Long id_curso
++ Integer status()
++ String ano_matricula()
++ Long id_curso()
++ Long id_aluno()
++ Integer matricula_aluno()
+}
+
+
+
+
+org.springframework.data.jpa.repository.JpaRepository <|-- com.cefet.rj.mg.sisca.domain.aluno.AlunoRepository
+@enduml

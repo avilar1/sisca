@@ -4,7 +4,7 @@ import com.cefet.rj.mg.sisca.domain.usuario.Usuario;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 @Table(name = "EMPRESTIMO")
 @Entity(name = "Emprestimo")
@@ -28,11 +28,21 @@ public class Emprestimo {
     private Usuario usuario;
 
     @Column(nullable = false)
-    private LocalDate emprestado;
+    @Temporal(TemporalType.DATE)
+    private Date emprestado;
 
     @Column(name = "limite_emprestimo", nullable = false)
-    private LocalDate limiteEmprestimo;
+    @Temporal(TemporalType.DATE)
+    private Date limiteEmprestimo;
 
     @Column(name = "data_entrega")
-    private LocalDate dataEntrega;
+    @Temporal(TemporalType.DATE)
+    private Date dataEntrega;
+
+    public Emprestimo(DadosCadastroEmprestimo dados, Livro livro, Usuario usuario) {
+        this.livro = livro;
+        this.usuario = usuario;
+        this.emprestado = dados.emprestado();
+        this.limiteEmprestimo = dados.limiteEmprestimo();
+    }
 }
