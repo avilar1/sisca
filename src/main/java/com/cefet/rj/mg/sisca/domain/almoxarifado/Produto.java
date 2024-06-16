@@ -1,8 +1,7 @@
 package com.cefet.rj.mg.sisca.domain.almoxarifado;
+
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.time.LocalDate;
 @Table(name = "PRODUTO")
 @Entity(name = "Produto")
 @Getter
@@ -22,4 +21,9 @@ public class Produto {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_tipo_produto", nullable = false)
     private TipoProduto tipoProduto;
+
+    public Produto(DadosCadastroProduto dados, TipoProduto tipoProduto) {
+        this.nome = dados.nome();
+        this.tipoProduto = tipoProduto;
+    }
 }
