@@ -14,6 +14,6 @@ import java.io.Serializable;
 @AllArgsConstructor
 @EqualsAndHashCode
 public class TurmaAlunoNotaId implements Serializable {
-    private Long matriculaAluno;
+    private Long idAluno;
     private Long idTurma;
 }

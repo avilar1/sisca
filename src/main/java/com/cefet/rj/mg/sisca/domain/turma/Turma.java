@@ -5,6 +5,7 @@ import com.cefet.rj.mg.sisca.domain.materia.Materia;
 import com.cefet.rj.mg.sisca.domain.professor.Professor;
 import com.cefet.rj.mg.sisca.domain.turmaAlunoFrequencia.TurmaAlunoFrequencia;
 import com.cefet.rj.mg.sisca.domain.turmaAlunoNota.TurmaAlunoNota;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -35,12 +36,9 @@ public class Turma {
     @Column(name = "semestre_turma", nullable = false, length = 6)
     private String semestre_turma;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "id_funcionario")
-//    private Professor professor;
-
-//    @OneToMany(mappedBy = "id_turma", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private List<AlunoTurma> alunosSituacao;
+//    @OneToMany(mappedBy = "turma")
+//    @JsonIgnoreProperties("turma")
+//    private List<AlunoTurma> alunoTurma;
 //
 //    @OneToMany(mappedBy = "id_turma", cascade = CascadeType.ALL, orphanRemoval = true)
 //    private List<TurmaAlunoNota> alunosNotas;

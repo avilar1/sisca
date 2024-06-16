@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.Optional;
 
@@ -39,7 +40,7 @@ public class TurmaAlunoFrequenciaRepositoryTest {
         turma.setId_turma(1L);
         turmaRepository.save(turma);
 
-        LocalDate dataFalta = LocalDate.now();
+        Date dataFalta = new Date(2024, 6, 15);
         TurmaAlunoFrequencia frequencia = new TurmaAlunoFrequencia(aluno, turma, dataFalta);
         repository.save(frequencia);
 

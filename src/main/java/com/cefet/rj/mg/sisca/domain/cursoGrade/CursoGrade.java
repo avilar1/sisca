@@ -35,6 +35,8 @@ public class CursoGrade {
     @Column(name = "periodo", nullable = false)
     private int periodo;
 
+
+
     public CursoGrade(DadosCadastroCursoGrade dados, Curso curso, Materia materia) {
         this.id = new CursoGradeId(dados);
         this.curso = curso;

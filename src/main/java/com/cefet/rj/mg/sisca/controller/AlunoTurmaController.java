@@ -13,14 +13,17 @@ import com.cefet.rj.mg.sisca.domain.turmaAlunoNota.TurmaAlunoNotaRepository;
 import com.cefet.rj.mg.sisca.infra.security.exception.CursoNotFoundException;
 import com.cefet.rj.mg.sisca.service.AlunoService;
 import com.cefet.rj.mg.sisca.service.AlunoTurmaService;
+import com.cefet.rj.mg.sisca.service.TurmaAlunoNotaService;
 import com.cefet.rj.mg.sisca.service.TurmaService;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -41,6 +44,8 @@ public class AlunoTurmaController {
 
     @Autowired
     TurmaAlunoNotaRepository turmaAlunoNotaRepository;
+    @Autowired
+    private TurmaAlunoNotaService turmaAlunoNotaService;
 
     @GetMapping("/{idTurma}")
     public ResponseEntity pegarUmaTurma(@PathVariable Long idTurma) {
@@ -50,14 +55,18 @@ public class AlunoTurmaController {
     }
 
     @PostMapping("/cadastrarEmTurma")
+    @Transactional
     public ResponseEntity cadastrarEmTurma(@RequestParam Long id_turma, @RequestParam Long id_aluno) {
         Turma turma = turmaService.pegarUmaTurma(id_turma);
         Aluno aluno = alunoService.pegarUmAluno(id_aluno);
 
         try {
             AlunoTurma alunoTurma = new AlunoTurma(turma, aluno, StatusAlunoTurma.CURSANDO);
-
             alunoTurmaService.salvarAlunoTurma(alunoTurma);
+
+            TurmaAlunoNota turmaAlunoNota = new TurmaAlunoNota(aluno, turma);
+            turmaAlunoNotaService.salvarAlunoENota(turmaAlunoNota);
+
             return ResponseEntity.ok(new DadosDetalhamentoAlunoTurma(alunoTurma));
         } catch (CursoNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
@@ -81,7 +90,7 @@ public class AlunoTurmaController {
     }
 
     @PostMapping("/cadastrarFalta")
-    public ResponseEntity cadastrarFalta(@RequestParam Long id_aluno, @RequestParam Long id_turma, @RequestParam LocalDate faltou){
+    public ResponseEntity cadastrarFalta(@RequestParam Long id_aluno, @RequestParam Long id_turma, @RequestParam Date faltou){
         var turmaOptional = turmaService.encontrarTurma(id_turma);
         var alunoOptional = alunoService.detalharaluno(id_aluno) != null ? alunoService.detalharaluno(id_aluno) : null;
 
