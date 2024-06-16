@@ -1,13 +1,19 @@
 package com.cefet.rj.mg.sisca.domain.turmaAlunoFrequencia;
 
 import com.cefet.rj.mg.sisca.domain.aluno.Aluno;
+import com.cefet.rj.mg.sisca.domain.alunoTurma.AlunoTurma;
 import com.cefet.rj.mg.sisca.domain.turma.Turma;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.sql.Date;
 import java.time.LocalDate;
 
 @Table(name = "TURMA_ALUNO_FREQUENCIA")
@@ -15,28 +21,40 @@ import java.time.LocalDate;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(of = {"matricula_aluno", "id_turma", "faltou"})
+@EqualsAndHashCode(of = {"id"})
 public class TurmaAlunoFrequencia {
 
     @EmbeddedId
     private TurmaAlunoFrequenciaId id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("matriculaAluno")
-    @JoinColumn(name = "matricula_aluno")
-    private Aluno matricula_aluno;
+    @ManyToOne
+    @MapsId("idAluno")
+    @JoinColumn(name = "id_aluno", referencedColumnName = "id_aluno")
+    @JsonManagedReference
+    private Aluno aluno;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @MapsId("idTurma")
-    @JoinColumn(name = "id_turma")
-    private Turma id_turma;
+    @JoinColumn(name = "id_turma", referencedColumnName = "id_turma")
+    @JsonManagedReference
+    private Turma turma;
 
-    private LocalDate faltou;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    @Column(name = "faltou")
+    private Date faltou;
 
-    public TurmaAlunoFrequencia( Aluno aluno, Turma turma, LocalDate faltou) {
+    @OneToOne
+    @JoinColumns({
+            @JoinColumn(name = "id_aluno", referencedColumnName = "id_aluno"),
+            @JoinColumn(name = "id_turma", referencedColumnName = "id_turma")
+    })
+    @JsonIgnoreProperties
+    private AlunoTurma alunoTurma;
+
+    public TurmaAlunoFrequencia( Aluno aluno, Turma turma, Date faltou) {
         this.id = new TurmaAlunoFrequenciaId(aluno.getId_aluno(), turma.getId_turma());
-        this.matricula_aluno = aluno;
-        this.id_turma = turma;
+        this.aluno = aluno;
+        this.turma = turma;
         this.faltou = faltou;
     }
 }

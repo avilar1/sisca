@@ -39,7 +39,6 @@ public class Curso {
     private List<Aluno> alunos;
 
     @OneToMany(mappedBy = "curso")
-    @JsonManagedReference
     private List<CursoGrade> cursoGrades;
 
 

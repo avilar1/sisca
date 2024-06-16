@@ -2,14 +2,18 @@ package com.cefet.rj.mg.sisca.domain.alunoTurma;
 
 import com.cefet.rj.mg.sisca.domain.aluno.Aluno;
 import com.cefet.rj.mg.sisca.domain.turma.Turma;
+import com.cefet.rj.mg.sisca.domain.turmaAlunoFrequencia.TurmaAlunoFrequencia;
+import com.cefet.rj.mg.sisca.domain.turmaAlunoNota.TurmaAlunoNota;
 import com.cefet.rj.mg.sisca.service.AlunoService;
 import com.cefet.rj.mg.sisca.service.TurmaService;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
 import java.util.Optional;
 
 @Table(name = "TURMA_ALUNO")
@@ -19,6 +23,7 @@ import java.util.Optional;
 @AllArgsConstructor
 public class AlunoTurma {
 
+        @Id
         @EmbeddedId
         private TurmaAlunoId id;
 
@@ -36,6 +41,21 @@ public class AlunoTurma {
         @Column(name = "status_aluno_turma")
         private StatusAlunoTurma  situacao;
 
+        @OneToOne
+        @JoinColumns({
+                @JoinColumn(name = "id_aluno", referencedColumnName = "id_aluno"),
+                @JoinColumn(name = "id_turma", referencedColumnName = "id_turma")
+        })
+        private TurmaAlunoNota turmaAlunoNota;
+
+        @OneToMany
+        @JoinColumns({
+                @JoinColumn(name = "id_aluno", referencedColumnName = "id_aluno"),
+                @JoinColumn(name = "id_turma", referencedColumnName = "id_turma")
+        })
+        @JsonBackReference
+        private List<TurmaAlunoFrequencia> turmaAlunoFrequencia;
+
         public AlunoTurma(Turma turma, Aluno aluno, StatusAlunoTurma situacao) {
                 TurmaAlunoId turmaAlunoId = new TurmaAlunoId(aluno.getId_aluno(), turma.getId_turma());
 
@@ -50,8 +70,7 @@ public class AlunoTurma {
         }
 
 
-//        @OneToMany(mappedBy = "alunoTurma", cascade = CascadeType.ALL)
-//        private List<Nota> notas;
+
 //
 //        @OneToMany(mappedBy = "alunoTurma", cascade = CascadeType.ALL)
 //        private List<Frequencia> frequencias;

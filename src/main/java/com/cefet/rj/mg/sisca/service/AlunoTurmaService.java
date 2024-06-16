@@ -29,7 +29,7 @@ public class AlunoTurmaService {
         TurmaAlunoId turmaAlunoId = new TurmaAlunoId(id_aluno, id_turma);
 
         return alunoTurmaRepository.findById(turmaAlunoId)
-                .orElseThrow(() -> new RuntimeException("Turma não encontrada"));
+                .orElseThrow(() -> new RuntimeException("Turma ou aluno não encontrada"));
     }
 
     public AlunoTurma trancarMatricula(AlunoTurma alunoTurma) {
