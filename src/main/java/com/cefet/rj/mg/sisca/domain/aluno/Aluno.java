@@ -1,27 +1,18 @@
 package com.cefet.rj.mg.sisca.domain.aluno;
 
-import com.cefet.rj.mg.sisca.domain.alunoCurso.AlunoCurso;
 import com.cefet.rj.mg.sisca.domain.curso.Curso;
-import com.cefet.rj.mg.sisca.domain.materia.Materia;
 import com.cefet.rj.mg.sisca.domain.usuario.Usuario;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import org.hibernate.FetchMode;
-import org.hibernate.annotations.Fetch;
+import lombok.*;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Table(name = "ALUNO")
 @Entity(name = "Aluno")
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id_aluno")
