@@ -20,4 +20,8 @@ public class TipoProduto {
 
     @Column(nullable = false)
     private String nome;
+
+    public TipoProduto(String nome) {
+        this.nome = nome;
+    }
 }

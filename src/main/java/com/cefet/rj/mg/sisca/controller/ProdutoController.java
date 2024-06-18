@@ -18,6 +18,7 @@ public class ProdutoController {
 
     @PostMapping("/cadastrar")
     public ResponseEntity<Produto> createProduto(@RequestBody DadosCadastroProduto dados) {
+
         Produto produto = produtoService.save(dados);
         return ResponseEntity.ok(produto);
     }

@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("turma")
@@ -58,7 +59,7 @@ public class TurmaController {
         }
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{id_turma}")
     public ResponseEntity detalharTurma(@PathVariable Long id_turma) {
         var turmaOptional = turmaService.encontrarTurma(id_turma);
         if (turmaOptional.isPresent()) {
@@ -68,6 +69,17 @@ public class TurmaController {
             return ResponseEntity.notFound().build();
         }
 
+    }
+
+    @GetMapping("/professor/{id_professor}")
+    public ResponseEntity<List<DadosDetalhamentoTurma>> detalharTurmaPorProfessor(@PathVariable Long id_professor) {
+        List<Turma> turmas = turmaService.turmaProProfessor(id_professor);
+
+        List<DadosDetalhamentoTurma> turmasFormatted = turmas.stream()
+                .map(DadosDetalhamentoTurma::new)
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(turmasFormatted);
     }
 
     @GetMapping("/periodo/{periodo}")

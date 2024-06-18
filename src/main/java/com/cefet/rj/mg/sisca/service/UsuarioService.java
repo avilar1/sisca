@@ -1,9 +1,6 @@
 package com.cefet.rj.mg.sisca.service;
 
-import com.cefet.rj.mg.sisca.domain.usuario.DadosAtualizaUsuario;
-import com.cefet.rj.mg.sisca.domain.usuario.DadosListagemUsuario;
-import com.cefet.rj.mg.sisca.domain.usuario.Usuario;
-import com.cefet.rj.mg.sisca.domain.usuario.UsuarioRepository;
+import com.cefet.rj.mg.sisca.domain.usuario.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -45,5 +42,12 @@ public class UsuarioService {
             throw new RuntimeException();
         }
         return usuario;
+    }
+
+    public Usuario login(DadosLoginUsuario dados) {
+        Usuario usuarioExistente = usuarioRepository.login(dados.cpf(), dados.senha())
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+
+        return usuarioExistente;
     }
 }

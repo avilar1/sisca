@@ -18,7 +18,7 @@ public class Produto {
     @Column(nullable = false)
     private String nome;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "id_tipo_produto", nullable = false)
     private TipoProduto tipoProduto;
 

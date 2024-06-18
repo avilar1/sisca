@@ -19,10 +19,11 @@ public class Estoque {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id_estoque;
 
-    @Column(name = "id_produto", nullable = false)
-    private Long IdProduto;
+    @ManyToOne
+    @JoinColumn(name = "id_produto", nullable = false)
+    private Produto produto;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "id_funcionario", nullable = false)
     private Funcionario funcionario;
 
@@ -35,8 +36,8 @@ public class Estoque {
     @Temporal(TemporalType.DATE)
     private Date dataTransacao;
 
-    public Estoque(DadosCadastroEstoque dados, Funcionario funcionario) {
-        this.IdProduto = dados.idProduto();
+    public Estoque(DadosCadastroEstoque dados, Funcionario funcionario, Produto produto) {
+        this.produto = produto;
         this.funcionario = funcionario;
         this.quantidade = dados.quantidade();
         this.descricao = dados.descricao();

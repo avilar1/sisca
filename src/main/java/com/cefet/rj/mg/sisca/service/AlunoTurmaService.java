@@ -15,12 +15,19 @@ public class AlunoTurmaService {
 
         @Autowired
         private AlunoTurmaRepository alunoTurmaRepository;
+
     public AlunoTurma salvarAlunoTurma(AlunoTurma alunoTurma) {
         return alunoTurmaRepository.save(alunoTurma);
     }
 
     public List<DadosDetalhamentoAlunoTurma> buscarAlunosPorTurma(Long id) {
         return alunoTurmaRepository.findByIdTurma(id).stream()
+                .map(DadosDetalhamentoAlunoTurma::new)
+                .collect(Collectors.toList());
+    }
+
+    public List<DadosDetalhamentoAlunoTurma> buscarAlunosTurmaPorAluno(Long id) {
+        return alunoTurmaRepository.findByIdAluno(id).stream()
                 .map(DadosDetalhamentoAlunoTurma::new)
                 .collect(Collectors.toList());
     }
@@ -45,50 +52,5 @@ public class AlunoTurmaService {
     }
 
 
-//
-//    public DadosSituacaoAlunoTurma obterSituacaoAlunoTurma(Long alunoId, Long turmaId) {
-//        List<AlunoTurma> alunoTurmaList = alunoTurmaRepository.findByAlunoIdAndTurmaId(alunoId, turmaId);
-//        if (alunoTurmaList.isEmpty()) {
-//            throw new RuntimeException("Situação não encontrada");
-//        }
-//
-//        AlunoTurma alunoTurma = alunoTurmaList.get(0);
-//        Aluno aluno = alunoTurma.getAluno();
-//        Turma turma = alunoTurma.getTurma();
-//        String situacao = alunoTurma.getSituacao();
-//
-//
-//        return new DadosSituacaoAlunoTurma(alunoTurma);
-//    }
-//
-//    public DadosNotaAlunoTurma obterNotaAlunoTurma(Long alunoId, Long turmaId) {
-//        List<AlunoTurma> alunoTurmaList = alunoTurmaRepository.findByAlunoIdAndTurmaId(alunoId, turmaId);
-//        if (alunoTurmaList.isEmpty()) {
-//            throw new RuntimeException("Nota não encontrada");
-//        }
-//
-//        AlunoTurma alunoTurma = alunoTurmaList.get(0);
-//        Aluno aluno = alunoTurma.getAluno();
-//        Turma turma = alunoTurma.getTurma();
-//        List<Nota> notas = alunoTurma.getNotas();
-//
-//
-//        return new DadosNotaAlunoTurma(alunoTurma);
-//    }
-//
-//    public DadosFrequenciaAlunoTurma obterFrequenciaAlunoTurma(Long alunoId, Long turmaId) {
-//        List<AlunoTurma> alunoTurmaList = alunoTurmaRepository.findByAlunoIdAndTurmaId(alunoId, turmaId);
-//        if (alunoTurmaList.isEmpty()) {
-//            throw new RuntimeException("Nota não encontrada");
-//        }
-//
-//        AlunoTurma alunoTurma = alunoTurmaList.get(0);
-//        Aluno aluno = alunoTurma.getAluno();
-//        Turma turma = alunoTurma.getTurma();
-//        List<Frequencia> frequencias = alunoTurma.getFrequencias();
-//
-//
-//        return new DadosFrequenciaAlunoTurma(alunoTurma);
-//    }
 
 }

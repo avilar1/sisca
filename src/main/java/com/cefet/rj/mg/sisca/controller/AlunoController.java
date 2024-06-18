@@ -73,6 +73,13 @@ public class AlunoController {
         return ResponseEntity.ok(new DadosDetalhamentoAluno(aluno));
     }
 
+    @GetMapping("/usuario/{id}")
+    public ResponseEntity detalharAlunoPorUsuario(@PathVariable Long id) {
+        Aluno aluno = alunoService.detalharAlunoProUsuario(id);
+
+        return ResponseEntity.ok(new DadosDetalhamentoAluno(aluno));
+    }
+
     @PutMapping("/atualizar")
     @Transactional
     public ResponseEntity atualizaAluno(@RequestBody DadosAtualizaAluno dados){
