@@ -1,7 +1,6 @@
 package com.cefet.rj.mg.sisca.controller;
 
 import com.cefet.rj.mg.sisca.domain.alunoTurma.AlunoTurma;
-import com.cefet.rj.mg.sisca.domain.turmaAlunoFrequencia.DadosListagemTurmaAlunoFrequencia;
 import com.cefet.rj.mg.sisca.domain.turmaAlunoFrequencia.TurmaAlunoFrequencia;
 import com.cefet.rj.mg.sisca.service.AlunoTurmaService;
 import com.cefet.rj.mg.sisca.service.TurmaAlunoFrequenciaService;
@@ -9,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -29,7 +27,7 @@ public class TurmaAlunoFrequenciaController {
     }
 
     @PostMapping
-    public TurmaAlunoFrequencia cadastrarNota(@RequestParam Long idTurma, @RequestParam Long idAluno, @RequestBody NotaRequest faltaRequest) {
+    public TurmaAlunoFrequencia cadastrarFrequencia(@RequestParam Long idTurma, @RequestParam Long idAluno, @RequestBody NotaRequest faltaRequest) {
         AlunoTurma turmaAluno = alunoTurmaService.buscarAlunoPorTurma(idAluno, idTurma);
 
         Date faltaDate = null;
