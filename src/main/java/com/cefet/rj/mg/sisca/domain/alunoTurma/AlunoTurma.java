@@ -4,17 +4,13 @@ import com.cefet.rj.mg.sisca.domain.aluno.Aluno;
 import com.cefet.rj.mg.sisca.domain.turma.Turma;
 import com.cefet.rj.mg.sisca.domain.turmaAlunoFrequencia.TurmaAlunoFrequencia;
 import com.cefet.rj.mg.sisca.domain.turmaAlunoNota.TurmaAlunoNota;
-import com.cefet.rj.mg.sisca.service.AlunoService;
-import com.cefet.rj.mg.sisca.service.TurmaService;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
-import java.util.Optional;
 
 @Table(name = "TURMA_ALUNO")
 @Entity(name = "AlunoTurma")
@@ -69,6 +65,9 @@ public class AlunoTurma {
                 this.situacao = StatusAlunoTurma.TRANCADO;
         }
 
+        public boolean isMatriculaTrancada() {
+                return this.situacao == StatusAlunoTurma.TRANCADO;
+        }
 
 
 //
