@@ -51,7 +51,7 @@ public class Usuario {
         }
 
         if (dados.cpf() != null) {
-            this.nome = dados.cpf();
+            this.nome = dados.nome();
         }
 
         if (dados.email() != null) {

@@ -132,7 +132,7 @@ public class TurmaServiceTest {
                 email,
                 telefone,
                 LocalDateTime.now(),
-                RoleEnum.ALUNO
+                RoleEnum.PROFESSOR
         );
     }
 }

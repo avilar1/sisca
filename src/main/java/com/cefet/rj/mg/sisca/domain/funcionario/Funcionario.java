@@ -37,4 +37,8 @@ public class Funcionario {
     public boolean isProfessor(Long id_funcionario){
         return this.usuario.getRole() == RoleEnum.PROFESSOR;
     }
+
+    public boolean isAlmoxarifado(Long id_funcionario){
+        return this.usuario.getRole() == RoleEnum.ALMOXARIFE;
+    }
 }
