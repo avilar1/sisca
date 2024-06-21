@@ -1,0 +1,6 @@
+INSERT INTO USUARIO (nome, senha, cpf, email, telefone, data_nascimento, ativo, role) VALUES ('Administrador 1', 'admin123', '03509844092', 'admin1@admin.com', '21991557828', '2003-12-21', 1, 'TECNICO');
+INSERT INTO USUARIO (nome, senha, cpf, email, telefone, data_nascimento, ativo, role) VALUES ('Aluno 1', 'aluno123', '61677229004', 'aluno1@aluno.com', '21991557828', '2003-12-21', 1, 'ALUNO');
+INSERT INTO USUARIO (nome, senha, cpf, email, telefone, data_nascimento, ativo, role) VALUES ('Professor 1', 'professor123', '54605597077', 'professor1@professor.com', '21991557828', '2003-12-21', 1, 'PROFESSOR');
+INSERT INTO USUARIO (nome, senha, cpf, email, telefone, data_nascimento, ativo, role) VALUES ('Bibliotecario 1', 'bibliotecario123', '91551549050', 'bibliotecario1@bibliotecario.com', '21991557828', '2003-12-21', 1, 'BIBLIOTECARIO');
+INSERT INTO USUARIO (nome, senha, cpf, email, telefone, data_nascimento, ativo, role) VALUES ('Almoxarife 1', 'almoxarife123', '50328711098', 'almoxarife1@almoxarife.com', '21991557828', '2003-12-21', 1, 'ALMOXARIFE');
+INSERT INTO USUARIO (nome, senha, cpf, email, telefone, data_nascimento, ativo, role) VALUES ('Financeiro 1', 'financeiro123', '74370048010', 'financeiro1@financeiro.com', '21991557828', '2003-12-21', 1, 'FINANCEIRO');
