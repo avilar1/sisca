@@ -45,6 +45,13 @@ public class AlunoService {
         return alunoExistente;
     }
 
+    public Aluno detalharAlunoProUsuario(Long id) {
+        Aluno alunoExistente = alunoRepository.pegarAlunoPorUsuario(id)
+                .orElseThrow(() -> new RuntimeException("Aluno não encontrado"));
+
+        return alunoExistente;
+    }
+
     public Aluno pegarUmAluno(Long id) {
         Aluno alunoExistente = alunoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Aluno não encontrado"));

@@ -21,8 +21,9 @@ public class EstoqueService {
     private FuncionarioRepository funcionarioRepository;
 
     public Estoque save(DadosCadastroEstoque dados) {
+        Produto produto = produtoRepository.findById(dados.idProduto()).orElseThrow();
         Funcionario funcionario = funcionarioRepository.findById(dados.idFuncionario()).orElseThrow();
-        return estoqueRepository.save(new Estoque(dados, funcionario));
+        return estoqueRepository.save(new Estoque(dados, funcionario, produto));
     }
 
     public List<Estoque> findAll() {

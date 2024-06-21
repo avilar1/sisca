@@ -11,4 +11,7 @@ public interface AlunoTurmaRepository extends JpaRepository<AlunoTurma, TurmaAlu
 
     @Query("SELECT at FROM AlunoTurma at WHERE at.id.idTurma = :idTurma")
     List<AlunoTurma> findByIdTurma(@Param("idTurma") Long idTurma);
+
+    @Query("SELECT at FROM AlunoTurma at WHERE at.id.idAluno = :idAluno")
+    List<AlunoTurma> findByIdAluno(@Param("idAluno") Long idAluno);
 }

@@ -15,12 +15,19 @@ public class AlunoTurmaService {
 
         @Autowired
         private AlunoTurmaRepository alunoTurmaRepository;
+
     public AlunoTurma salvarAlunoTurma(AlunoTurma alunoTurma) {
         return alunoTurmaRepository.save(alunoTurma);
     }
 
     public List<DadosDetalhamentoAlunoTurma> buscarAlunosPorTurma(Long id) {
         return alunoTurmaRepository.findByIdTurma(id).stream()
+                .map(DadosDetalhamentoAlunoTurma::new)
+                .collect(Collectors.toList());
+    }
+
+    public List<DadosDetalhamentoAlunoTurma> buscarAlunosTurmaPorAluno(Long id) {
+        return alunoTurmaRepository.findByIdAluno(id).stream()
                 .map(DadosDetalhamentoAlunoTurma::new)
                 .collect(Collectors.toList());
     }
@@ -43,6 +50,7 @@ public class AlunoTurmaService {
     public void deletarAlunoTurma(AlunoTurma alunoTurma) {
         alunoTurmaRepository.delete(alunoTurma);
     }
+
 
 
 }

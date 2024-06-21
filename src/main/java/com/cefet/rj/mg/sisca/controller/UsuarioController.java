@@ -19,6 +19,13 @@ public class UsuarioController {
     @Autowired
     private UsuarioService usuarioService;
 
+    @PostMapping("/login")
+    public ResponseEntity login(@RequestBody DadosLoginUsuario dados) {
+        Usuario usuario = usuarioService.login(dados);
+
+        return ResponseEntity.ok(usuario);
+    }
+
     @PostMapping("/cadastrar")
     @Transactional
     public void cadastrar(@RequestBody DadosCadastroUsuario dados) {

@@ -54,6 +54,13 @@ public class AlunoTurmaController {
         return ResponseEntity.ok(alunoTurma);
     }
 
+    @GetMapping("/aluno/{idAluno}")
+    public ResponseEntity pegarUmaTurmaPorAluno(@PathVariable Long idAluno) {
+        List<DadosDetalhamentoAlunoTurma> alunoTurma = alunoTurmaService.buscarAlunosTurmaPorAluno(idAluno);
+
+        return ResponseEntity.ok(alunoTurma);
+    }
+
     @PostMapping("/cadastrarEmTurma")
     @Transactional
     public ResponseEntity cadastrarEmTurma(@RequestParam Long id_turma, @RequestParam Long id_aluno) {

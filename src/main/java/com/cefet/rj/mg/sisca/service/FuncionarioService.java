@@ -16,4 +16,9 @@ public class FuncionarioService {
         return funcionarioRepository.findById(id_funcionario);
     }
 
+    public Funcionario encontrarFuncionarioPorUsuario(Long id_usuario) {
+        return funcionarioRepository.findByUsuario(id_usuario)
+                .orElseThrow(() -> new RuntimeException("Funcionario não existe"));
+    }
+
 }

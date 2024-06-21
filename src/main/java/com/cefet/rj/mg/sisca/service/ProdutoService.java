@@ -16,7 +16,7 @@ public class ProdutoService {
     private TipoProdutoRepository tipoProdutoRepository;
 
     public Produto save(DadosCadastroProduto dados) {
-        TipoProduto tipoProduto = tipoProdutoRepository.findById(dados.tipoProduto().getId_tipo_produto()).orElseThrow();
+        TipoProduto tipoProduto = tipoProdutoRepository.findById(dados.id_tipo_produto()).orElseThrow();
         return produtoRepository.save(new Produto(dados, tipoProduto));
     }
 

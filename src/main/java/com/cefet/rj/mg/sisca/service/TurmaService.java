@@ -40,6 +40,11 @@ public class TurmaService {
         return turmaExiste;
     }
 
+    public List<Turma> turmaProProfessor(Long id_funcionario) {
+        return turmaRepository.findByProfessor(id_funcionario)
+                .orElseThrow(() -> new RuntimeException("Professor nao possui turmas"));
+    }
+
     public List<Turma> turmaPorPeriodo(String periodo) {
         List<Turma> turmas = turmaRepository.findAllBySemestreTurma(periodo);
 
